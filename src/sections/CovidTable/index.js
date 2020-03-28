@@ -23,6 +23,7 @@ function CovidTable() {
   const { loading, datas } = useFetch(
     "https://raw.githubusercontent.com/BlankerL/DXY-COVID-19-Data/master/json/DXYArea.json"
   );
+  g;
   const columns = [
     {
       title: "ชื่อประเทศ",
@@ -66,7 +67,7 @@ function CovidTable() {
         <Table
           columns={columns}
           dataSource={datas.results}
-          onChange={onChange}
+          // onChange={onChange}
         ></Table>
       )}
     </div>
