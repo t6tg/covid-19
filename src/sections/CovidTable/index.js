@@ -23,7 +23,6 @@ function CovidTable() {
   const { loading, datas } = useFetch(
     "https://raw.githubusercontent.com/BlankerL/DXY-COVID-19-Data/master/json/DXYArea.json"
   );
-  g;
   const columns = [
     {
       title: "ชื่อประเทศ",
