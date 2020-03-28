@@ -1,47 +1,28 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
+import React from "react";
+import "./style/App.css";
+import CovidTable from "./sections/CovidTable/index";
+import { Breadcrumb, Menu, Layout } from "antd";
+const { Header, Content, Footer } = Layout;
 
-const useFetch = url => {
-  const [datas, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  async function fetchData() {
-    const response = await fetch(url);
-    const json = await response.json();
-    setData(json);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  return { loading, datas };
-};
-
-function App() {
-  const { loading, datas } = useFetch(
-    "https://raw.githubusercontent.com/BlankerL/DXY-COVID-19-Data/master/json/DXYArea.json"
-  );
+export default function App() {
   return (
     <div>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <ul>
-          {datas.results.map(data => {
-            if (data.countryEnglishName != null)
-              return (
-                <div>
-                  <li key={data.locationId}>{data.countryEnglishName}</li>
-                  <li>{data.confirmedCount}</li>
-                </div>
-              );
-          })}
-        </ul>
-      )}
+      <Layout>
+        <Header>
+          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
+            <Menu.Item key="1">nav 1</Menu.Item>
+          </Menu>
+        </Header>
+        <Content style={{ padding: "0 50px" }}>
+          <br />
+          <div className="site-layout-content">
+            <CovidTable />
+          </div>
+        </Content>
+        <Footer style={{ textAlign: "center" }}>
+          Ant Design ©2018 Created by Ant UED
+        </Footer>
+      </Layout>
     </div>
   );
 }
-
-export default App;
