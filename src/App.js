@@ -11,7 +11,7 @@ export default function App() {
       <Layout>
         <Header>
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-            <Menu.Item key="1">nav 1</Menu.Item>
+            <Menu.Item key="1">Covid Thailand By Thanawat Gulati</Menu.Item>
           </Menu>
         </Header>
         <Content style={{ padding: "0 50px" }}>

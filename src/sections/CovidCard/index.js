@@ -4,6 +4,7 @@ import "./style.css";
 let thaicurrentConfirmedCount;
 let thaidead;
 let thaicuredCount;
+let update;
 const useFetch = url => {
   const [loading, setLoading] = useState(true);
 
@@ -15,6 +16,7 @@ const useFetch = url => {
         thaicurrentConfirmedCount = datax.confirmedCount;
         thaidead = datax.deadCount;
         thaicuredCount = datax.curedCount;
+        update = datax.updateTime;
       }
     });
     setLoading(false);
@@ -34,10 +36,11 @@ function CovidCard() {
 
   return (
     <div className="site-card-wrapper">
+      <h1>Update at : {new Date(update).toLocaleDateString("en-US")}</h1>
       <Row gutter={16}>
         <Col span={8}>
           <Card
-            title="จำนวนผู้ติดเชื้อรวม"
+            title="จำนวนผู้ติดเชื้อรวมในไทย"
             style={{ backgroundColor: "#f0ad4e" }}
             loading={loading}
             bordered={false}
@@ -47,7 +50,7 @@ function CovidCard() {
         </Col>
         <Col span={8}>
           <Card
-            title="จำนวนผู้รักษาหายแล้ว"
+            title="จำนวนผู้รักษาหายแล้วในไทย"
             style={{ backgroundColor: "#5cb85c" }}
             loading={loading}
             bordered={false}
@@ -57,7 +60,7 @@ function CovidCard() {
         </Col>
         <Col span={8}>
           <Card
-            title="จำนวนผู้เสียชีวิต"
+            title="จำนวนผู้เสียชีวิตในไทย"
             style={{ backgroundColor: "#d9534f" }}
             loading={loading}
             bordered={false}
