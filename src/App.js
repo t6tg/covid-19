@@ -1,7 +1,8 @@
 import React from "react";
 import "./style/App.css";
 import CovidTable from "./sections/CovidTable/index";
-import { Breadcrumb, Menu, Layout } from "antd";
+import CovidCard from "./sections/CovidCard";
+import { Menu, Layout } from "antd";
 const { Header, Content, Footer } = Layout;
 
 export default function App() {
@@ -14,7 +15,7 @@ export default function App() {
           </Menu>
         </Header>
         <Content style={{ padding: "0 50px" }}>
-          <br />
+          <CovidCard />
           <div className="site-layout-content">
             <CovidTable />
           </div>

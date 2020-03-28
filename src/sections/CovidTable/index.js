@@ -59,7 +59,6 @@ function CovidTable() {
 
   return (
     <div>
-      {}
       {loading ? (
         <Table loading={loading}></Table>
       ) : (
