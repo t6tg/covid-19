@@ -67,7 +67,7 @@ function CovidTable() {
         <Table
           columns={columns}
           dataSource={datas.results}
-          // onChange={onChange}
+          onChange={onChange}
         ></Table>
       )}
     </div>
