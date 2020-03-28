@@ -21,7 +21,7 @@ export default function App() {
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
+          Covid-19 ©2020 Created by Thanawat Gulati
         </Footer>
       </Layout>
     </div>
