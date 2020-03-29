@@ -2,6 +2,7 @@ import React from "react";
 import "./style/App.css";
 import CovidTable from "./sections/CovidTable/index";
 import CovidCard from "./sections/CovidCard";
+import CovidChart from "./sections/CovidChart";
 import { Layout } from "antd";
 const { Header, Content, Footer } = Layout;
 
@@ -37,6 +38,7 @@ export default function App() {
         </Header>
         <Content style={{ padding: "0 50px" }}>
           <div className="site-layout-content">
+            <CovidChart />
             <CovidTable />
           </div>
         </Content>
