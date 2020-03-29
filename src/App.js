@@ -10,27 +10,7 @@ const { Header, Content, Footer } = Layout;
 let updateTime;
 const apiUrl = "https://api.covid19api.com/stats";
 
-const useFetch = url => {
-  const [loading, setLoading] = useState(true);
-
-  async function fetchData() {
-    const response = await fetch(url);
-    const json = await response.json();
-    updateTime = moment(json.AllUpdated)
-      .utc()
-      .format("DD/MM/YYYY h:mm:ss a");
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  return { loading };
-};
-
 export default function App() {
-  const { loading } = useFetch(apiUrl);
   return (
     <div>
       <Layout>
@@ -63,7 +43,7 @@ export default function App() {
         <Content style={{ padding: "0 50px" }}>
           <div className="site-layout-content">
             <h4 align="right" style={{ color: "#b92246" }}>
-              Update at : {!loading ? updateTime : "Loading . . ."}
+              Update at : {moment().format("LL")}
             </h4>
             <h5 align="right" style={{ color: "green" }}>
               ( Data From covid19api and WHO )
