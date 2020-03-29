@@ -1,72 +1,128 @@
 import React, { useState, useEffect } from "react";
-import { Card, Col, Row } from "antd";
+import { Col, Row, Spin } from "antd";
 import "./style.css";
-let thaicurrentConfirmedCount;
-let thaidead;
-let thaicuredCount;
-let update;
+
+let deaths;
+let recovery;
+let now;
+const apiUrl = "https://api.covid19api.com/summary";
+
 const useFetch = url => {
+  const [datas] = useState(null);
   const [loading, setLoading] = useState(true);
 
   async function fetchData() {
     const response = await fetch(url);
     const json = await response.json();
-    json.results.map(datax => {
-      if (datax.countryEnglishName === "Thailand") {
-        thaicurrentConfirmedCount = datax.confirmedCount;
-        thaidead = datax.deadCount;
-        thaicuredCount = datax.curedCount;
-        update = datax.updateTime;
-      }
-    });
+    if (json.Countries[203].Country === "Thailand") {
+      const val = json.Countries[203];
+      deaths = val.TotalDeaths;
+      recovery = val.TotalRecovered;
+      now = val.TotalConfirmed;
+    }
     setLoading(false);
   }
 
   useEffect(() => {
     fetchData();
-  }, []);
+  });
 
-  return { loading };
+  return { loading, datas };
 };
 
 function CovidCard() {
-  const { loading } = useFetch(
-    "https://raw.githubusercontent.com/BlankerL/DXY-COVID-19-Data/master/json/DXYArea.json"
-  );
-
+  const { loading } = useFetch(apiUrl);
+  if (loading) {
+    return (
+      <center>
+        <Spin style={{ marginTop: "100px" }} tip="Loading Data..."></Spin>
+      </center>
+    );
+  }
   return (
     <div className="site-card-wrapper">
-      <h1>Update at : {new Date(update).toLocaleDateString("en-US")}</h1>
-      <Row gutter={16}>
+      <Row
+        gutter={8}
+        align={"middle"}
+        style={{ textAlign: "center" }}
+        justify={"center"}
+      >
         <Col span={8}>
-          <Card
-            title="จำนวนผู้ติดเชื้อรวมในไทย"
-            style={{ backgroundColor: "#f0ad4e" }}
-            loading={loading}
-            bordered={false}
-          >
-            <h1>{thaicurrentConfirmedCount} คน</h1>
-          </Card>
+          <div className="card">
+            <h4 style={{ color: "#fff", fontSize: "24px", fontWeight: 600 }}>
+              ผู้ติดเชื้อ
+            </h4>
+            <h1
+              style={{
+                color: "#fff",
+                fontSize: "140px",
+                fontWeight: 600,
+                marginTop: "50px"
+              }}
+            >
+              {now}
+            </h1>
+            <h2
+              style={{
+                color: "#fff",
+                marginTop: "-30px",
+                fontSize: "36px",
+                fontWeight: 600
+              }}
+            >
+              คน
+            </h2>
+          </div>
         </Col>
-        <Col span={8}>
-          <Card
-            title="จำนวนผู้รักษาหายแล้วในไทย"
-            style={{ backgroundColor: "#5cb85c" }}
-            loading={loading}
-            bordered={false}
-          >
-            <h1>{thaicuredCount} คน</h1>
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card
-            title="จำนวนผู้เสียชีวิตในไทย"
-            style={{ backgroundColor: "#d9534f" }}
-            loading={loading}
-            bordered={false}
-          >
-            <h1>{thaidead} คน</h1>
-          </Card>
+        <Col span={8} style={{ marginLeft: "30px" }}>
+          <Col span={16}>
+            <div className="card2">
+              <h2
+                style={{
+                  color: "#fff",
+                  fontSize: "24px",
+                  fontWeight: 600
+                }}
+              >
+                {" "}
+                ผู้รักษาหาย
+              </h2>
+              <h1
+                style={{
+                  color: "#fff",
+                  fontSize: "72px",
+                  fontWeight: 600,
+                  marginTop: "-10px"
+                }}
+              >
+                {recovery} คน
+              </h1>
+            </div>
+          </Col>
+          <Col span={16} style={{ marginTop: "10px" }}>
+            <div className="card3">
+              <h2
+                style={{
+                  color: "#fff",
+                  fontSize: "24px",
+                  fontWeight: 600
+                }}
+              >
+                {" "}
+                ผู้เสียชีวิต
+              </h2>
+              <h1
+                style={{
+                  color: "#fff",
+                  fontSize: "72px",
+                  fontWeight: 600,
+                  marginTop: "-10px"
+                }}
+              >
+                {deaths} คน
+              </h1>
+            </div>
+          </Col>
         </Col>
       </Row>
     </div>

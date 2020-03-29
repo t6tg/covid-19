@@ -2,20 +2,40 @@ import React from "react";
 import "./style/App.css";
 import CovidTable from "./sections/CovidTable/index";
 import CovidCard from "./sections/CovidCard";
-import { Menu, Layout } from "antd";
+import { Layout } from "antd";
 const { Header, Content, Footer } = Layout;
 
 export default function App() {
   return (
     <div>
       <Layout>
-        <Header>
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-            <Menu.Item key="1">Covid Thailand By Thanawat Gulati</Menu.Item>
-          </Menu>
+        <Header style={{ height: "600px", backgroundColor: "#353538" }}>
+          <h1
+            style={{
+              fontSize: "64px",
+              fontWeight: 600,
+              color: "#FF3A81",
+              textAlign: "center",
+              marginTop: "40px",
+              marginBottom: "-20px"
+            }}
+          >
+            COVID-19 🇹🇭
+          </h1>
+          <h1
+            style={{
+              fontSize: "64px",
+              fontWeight: 600,
+              color: "#fff",
+              textAlign: "center",
+              marginTop: "40px"
+            }}
+          >
+            Thailand Realtime Data
+          </h1>
+          <CovidCard />
         </Header>
         <Content style={{ padding: "0 50px" }}>
-          <CovidCard />
           <div className="site-layout-content">
             <CovidTable />
           </div>

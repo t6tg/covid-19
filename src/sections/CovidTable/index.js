@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "antd";
+import { Table, Spin } from "antd";
+
+const apiUrl = "https://api.covid19api.com/summary";
 
 const useFetch = url => {
   const [datas, setData] = useState(null);
@@ -20,54 +22,51 @@ const useFetch = url => {
 };
 
 function CovidTable() {
-  const { loading, datas } = useFetch(
-    "https://raw.githubusercontent.com/BlankerL/DXY-COVID-19-Data/master/json/DXYArea.json"
-  );
+  const { loading, datas } = useFetch(apiUrl);
+  if (loading) {
+    return (
+      <center>
+        <Spin style={{ marginTop: "100px" }} tip="Loading Data..."></Spin>
+      </center>
+    );
+  }
   const columns = [
     {
       title: "ชื่อประเทศ",
-      dataIndex: "countryEnglishName",
-      key: "countryEnglishName"
+      dataIndex: "Country",
+      key: "Country"
     },
     {
-      title: "เมือง",
-      dataIndex: "provinceEnglishName",
-      key: "provinceEnglishName"
+      title: "ผู้ติดเชื่อ",
+      dataIndex: "TotalConfirmed",
+      key: "TotalConfirmed",
+      defaultSortOrder: "descend",
+      sorter: (a, b) => a.TotalConfirmed - b.TotalConfirmed
     },
     {
-      title: "จำนวนที่ยืนยันแล้ว",
-      dataIndex: "confirmedCount",
-      key: "confirmedCount",
-      sorter: (a, b) => a.confirmedCount - b.confirmedCount
+      title: "หายแล้ว",
+      dataIndex: "TotalRecovered",
+      key: "TotalRecovered",
+      defaultSortOrder: "descend",
+      sorter: (a, b) => a.TotalRecovered - b.TotalRecovered
     },
     {
-      title: "จำนวนผู้เสียชีวิต",
-      key: "deadCount",
-      dataIndex: "deadCount",
-      sorter: (a, b) => a.deadCount - b.deadCount
-    },
-    {
-      title: "จำนวนผู้รักษาหายแล้ว",
-      key: "curedCount",
-      dataIndex: "curedCount",
-      sorter: (a, b) => a.curedCount - b.curedCount
+      title: "เสียชีวิต",
+      dataIndex: "TotalDeaths",
+      key: "TotalDeaths",
+      defaultSortOrder: "descend",
+      sorter: (a, b) => a.TotalDeaths - b.TotalDeaths
     }
   ];
-  function onChange(pagination, filters, sorter, extra) {
-    console.log("params", pagination, filters, sorter, extra);
-  }
 
   return (
     <div>
       {loading ? (
         <Table loading={loading}></Table>
       ) : (
-        <Table
-          columns={columns}
-          dataSource={datas.results}
-          onChange={onChange}
-        ></Table>
+        <Table columns={columns} dataSource={datas.Countries}></Table>
       )}
+      <p>{console.log(datas)}</p>
     </div>
   );
 }
