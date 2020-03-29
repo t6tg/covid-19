@@ -1,12 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./style/App.css";
+import moment from "moment";
 import CovidTable from "./sections/CovidTable/index";
 import CovidCard from "./sections/CovidCard";
 import CovidChart from "./sections/CovidChart";
 import { Layout } from "antd";
 const { Header, Content, Footer } = Layout;
 
+let updateTime;
+const apiUrl = "https://api.covid19api.com/stats";
+
+const useFetch = url => {
+  const [loading, setLoading] = useState(true);
+
+  async function fetchData() {
+    const response = await fetch(url);
+    const json = await response.json();
+    updateTime = moment(json.AllUpdated)
+      .utc()
+      .format("DD/MM/YYYY h:mm:ss a");
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return { loading };
+};
+
 export default function App() {
+  const { loading } = useFetch(apiUrl);
   return (
     <div>
       <Layout>
@@ -38,6 +62,12 @@ export default function App() {
         </Header>
         <Content style={{ padding: "0 50px" }}>
           <div className="site-layout-content">
+            <h4 align="right" style={{ color: "#b92246" }}>
+              Update at : {!loading ? updateTime : "Loading . . ."}
+            </h4>
+            <h5 align="right" style={{ color: "green" }}>
+              ( Data From covid19api and WHO )
+            </h5>
             <CovidChart />
             <CovidTable />
           </div>
