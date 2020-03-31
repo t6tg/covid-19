@@ -7,9 +7,6 @@ import CovidChart from "./sections/CovidChart";
 import { Layout } from "antd";
 const { Header, Content, Footer } = Layout;
 
-let updateTime;
-const apiUrl = "https://api.covid19api.com/stats";
-
 export default function App() {
   return (
     <div>

@@ -14,12 +14,15 @@ const useFetch = url => {
   async function fetchData() {
     const response = await fetch(url);
     const json = await response.json();
-    if (json.Countries[203].Country === "Thailand") {
-      const val = json.Countries[203];
-      deaths = val.TotalDeaths;
-      recovery = val.TotalRecovered;
-      now = val.TotalConfirmed;
-    }
+    json.Countries.array.forEach(r => {
+      console.log(r);
+      // if (json.Countries[i].Country === "Thailand") {
+      //   const val = json.Countries[204];
+      //   deaths = val.TotalDeaths;
+      //   recovery = val.TotalRecovered;
+      //   now = val.TotalConfirmed;
+      // }
+    });
     setLoading(false);
   }
 

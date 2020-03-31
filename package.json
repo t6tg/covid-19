@@ -16,9 +16,11 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
+    "react-youtube": "^7.9.0",
     "recharts": "^1.8.5",
     "swr": "^0.1.18",
-    "time-ago": "^0.2.1"
+    "time-ago": "^0.2.1",
+    "youtube-v3-api": "^1.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
