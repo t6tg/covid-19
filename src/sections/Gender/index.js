@@ -26,9 +26,9 @@ const useFetch = url => {
     const json = await response.json();
     data = [
       {
-        Male: json.Gender.Male,
-        Female: json.Gender.Female,
-        Unknown: json.Gender.Unknown
+        ชาย: json.Gender.Male,
+        หญิง: json.Gender.Female,
+        ไม่ทราบ: json.Gender.Unknown
       }
     ];
     setLoading(false);
@@ -105,9 +105,9 @@ function CovidTable() {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="Male" fill="#8884d8" />
-            <Bar dataKey="Female" fill="#82ca9d" />
-            <Bar dataKey="Unknown" fill="#82ca9d" />
+            <Bar dataKey="ชาย" fill="blue" />
+            <Bar dataKey="หญิง" fill="red" />
+            <Bar dataKey="ไม่ทราบ" fill="black" />
           </BarChart>
         </Col>
         <Col span={12}>
