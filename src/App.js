@@ -1,13 +1,33 @@
 import React, { useState, useEffect } from "react";
 import "./style/App.css";
-import moment from "moment";
+import Gender from "./sections/Gender";
 import CovidTable from "./sections/CovidTable/index";
 import CovidCard from "./sections/CovidCard";
 import CovidChart from "./sections/CovidChart";
 import { Layout } from "antd";
 const { Header, Content, Footer } = Layout;
 
+const apiUrl = "https://covid19.th-stat.com/api/open/today";
+let date;
+const useFetch = url => {
+  const [loading, setLoading] = useState(true);
+
+  async function fetchData() {
+    const response = await fetch(url);
+    const json = await response.json();
+    date = json.UpdateDate;
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchData();
+  });
+
+  return { loading };
+};
+
 export default function App() {
+  useFetch(apiUrl);
   return (
     <div>
       <Layout>
@@ -40,12 +60,15 @@ export default function App() {
         <Content style={{ padding: "0 50px" }}>
           <div className="site-layout-content">
             <h4 align="right" style={{ color: "#b92246" }}>
-              Update at : {moment().format("LL")}
+              Update at : {date}
             </h4>
             <h5 align="right" style={{ color: "green" }}>
-              ( Data From covid19api and WHO )
+              ( Data From covid19api and WHO และ กรมควบคุมโรค )
             </h5>
             <CovidChart />
+            <br />
+            <Gender />
+            <br />
             <CovidTable />
           </div>
         </Content>

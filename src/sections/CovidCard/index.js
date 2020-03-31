@@ -5,7 +5,8 @@ import "./style.css";
 let deaths;
 let recovery;
 let now;
-const apiUrl = "https://api.covid19api.com/summary";
+let newConfirm;
+const apiUrl = "https://covid19.th-stat.com/api/open/today";
 
 const useFetch = url => {
   const [datas] = useState(null);
@@ -14,13 +15,10 @@ const useFetch = url => {
   async function fetchData() {
     const response = await fetch(url);
     const json = await response.json();
-    json.Countries.forEach(r => {
-      if (r.Country === "Thailand") {
-        deaths = r.TotalDeaths;
-        recovery = r.TotalRecovered;
-        now = r.TotalConfirmed;
-      }
-    });
+    deaths = json.Deaths;
+    recovery = json.Recovered;
+    now = json.Confirmed;
+    newConfirm = json.NewConfirmed;
     setLoading(false);
   }
 
@@ -61,18 +59,11 @@ function CovidCard() {
                 marginTop: "50px"
               }}
             >
-              {now}
+              {now}{" "}
             </h1>
-            <h2
-              style={{
-                color: "#fff",
-                marginTop: "-30px",
-                fontSize: "36px",
-                fontWeight: 600
-              }}
-            >
-              คน
-            </h2>
+            <span style={{ fontSize: "24px", color: "#fff", marginTop: "0px" }}>
+              ( เพิ่มมา {newConfirm} คน )
+            </span>
           </div>
         </Col>
         <Col span={8} style={{ marginLeft: "30px" }}>
@@ -96,7 +87,10 @@ function CovidCard() {
                   marginTop: "-10px"
                 }}
               >
-                {recovery} คน
+                {recovery}
+                <span
+                  style={{ fontSize: "18px", color: "#fff", marginTop: "0px" }}
+                ></span>
               </h1>
             </div>
           </Col>
@@ -120,7 +114,7 @@ function CovidCard() {
                   marginTop: "-10px"
                 }}
               >
-                {deaths} คน
+                {deaths}
               </h1>
             </div>
           </Col>

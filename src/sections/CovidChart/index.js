@@ -10,13 +10,11 @@ import {
   Tooltip
 } from "recharts";
 import { Spin, Row, Col } from "antd";
-import moment from "moment";
 
 let data = [];
 let dataWorld = [];
 
-const apiUrl =
-  "https://api.covid19api.com/total/country/thailand/status/confirmed";
+const apiUrl = "https://covid19.th-stat.com/api/open/timeline";
 const world = "https://api.covid19api.com/summary";
 
 const useFetch = url => {
@@ -26,12 +24,13 @@ const useFetch = url => {
   async function fetchData() {
     const response = await fetch(url);
     const json = await response.json();
-    json.map(r => {
+    json.Data.map(r => {
       data.push({
-        name: moment(r.Date)
-          .utc()
-          .format("DD/MM/YYYY"),
-        Case: r.Cases
+        วันที่: r.Date,
+        ติดเชื้อ: r.Confirmed,
+        รักษาหายแล้ว: r.Recovered,
+        เสียชีวิต: r.Deaths,
+        กำลังรักษา: r.Hospitalized
       });
     });
     setData(json);
@@ -70,8 +69,8 @@ const useFetchWorld = url => {
 };
 
 function CovidTable() {
-  const { loading, datas } = useFetch(apiUrl);
-  const { loadingw, dataw } = useFetchWorld(world);
+  const { loading } = useFetch(apiUrl);
+  const { loadingw } = useFetchWorld(world);
 
   if (loading || loadingw) {
     return (
@@ -93,9 +92,12 @@ function CovidTable() {
         <Col span={12}>
           <h2>ผู้ติดเชื้อในไทย</h2>
           <LineChart width={600} height={300} data={data}>
-            <Line type="monotone" dataKey="Case" stroke="#f0dc26" />
+            <Line type="monotone" dataKey="ติดเชื้อ" stroke="#f0dc26" />
+            <Line type="monotone" dataKey="รักษาหายแล้ว" stroke="green" />
+            <Line type="monotone" dataKey="เสียชีวิต" stroke="red" />
+            <Line type="monotone" dataKey="กำลังรักษา" stroke="blue" />
             <CartesianGrid stroke="#ccc" />
-            <XAxis dataKey="name" />
+            <XAxis dataKey="วันที่" />
             <YAxis />
             <Tooltip />
           </LineChart>
