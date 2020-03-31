@@ -15,11 +15,11 @@ const useFetch = url => {
     const response = await fetch(url);
     const json = await response.json();
     json.Countries.forEach(r => {
-      console.log(r.Country === "Thailand");
-      const val = json.Countries[204];
-      deaths = val.TotalDeaths;
-      recovery = val.TotalRecovered;
-      now = val.TotalConfirmed;
+      if (r.Country === "Thailand") {
+        deaths = r.TotalDeaths;
+        recovery = r.TotalRecovered;
+        now = r.TotalConfirmed;
+      }
     });
     setLoading(false);
   }
