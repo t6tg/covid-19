@@ -66,7 +66,6 @@ function CovidTable() {
       ) : (
         <Table columns={columns} dataSource={datas.Countries}></Table>
       )}
-      <p>{console.log(datas)}</p>
     </div>
   );
 }
