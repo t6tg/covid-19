@@ -15,7 +15,7 @@
     "moment": "^2.24.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "5.0.1",
     "react-youtube": "^7.9.0",
     "recharts": "^1.8.5",
     "swr": "^0.1.18",
